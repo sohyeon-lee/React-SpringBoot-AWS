@@ -2,10 +2,10 @@ package com.example.demo.controller;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -33,7 +33,6 @@ public class TodoController {
 		List<String> list = new ArrayList<>();
 		list.add(str);
 		ResponseDTO<String> response = ResponseDTO.<String>builder().data(list).build();
-		
 		return ResponseEntity.ok().body(response);
 	}
 	
@@ -62,14 +61,12 @@ public class TodoController {
 			}
 			// 변환된 TodoDTO리스트를 이용해 ResponseDTO를 초기화한다.
 			ResponseDTO<TodoDTO> response = ResponseDTO.<TodoDTO>builder().data(dtos).build();
-			
 			return ResponseEntity.ok().body(response);
 			
 		} catch (Exception e) {
 			// 혹시 예외가 나는 경우 dto대신 error에 메시지를 넣어 리턴한다.
 			String error = e.getMessage();
 			ResponseDTO<TodoDTO> response = ResponseDTO.<TodoDTO>builder().error(error).build();
-			
 			return ResponseEntity.badRequest().body(response);
 		}
 	}
@@ -90,7 +87,6 @@ public class TodoController {
 			dtos.add(todoDTO);
 		}
 		ResponseDTO<TodoDTO> response = ResponseDTO.<TodoDTO>builder().data(dtos).build();
-		
 		return ResponseEntity.ok().body(response);
 	}
 	
@@ -111,7 +107,32 @@ public class TodoController {
 			dtos.add(todoDTO);
 		}
 		ResponseDTO<TodoDTO> response = ResponseDTO.<TodoDTO>builder().data(dtos).build();
-		
 		return ResponseEntity.ok().body(response);
+	}
+	
+	@DeleteMapping
+	public ResponseEntity<?> deleteTodo(@RequestBody TodoDTO dto) {
+		try {
+			TodoEntity entity = TodoDTO.toEntity(dto);
+			entity.setUserId(temporaryUserId); // 수정 예정
+			
+			List<TodoEntity> entities = service.delete(entity);
+			//List<TodoDTO> dtos = entities.stream().map(TodoDTO::new).collect(Collectors.toList());
+			List<TodoDTO> dtos = new ArrayList<>();
+			TodoDTO todoDTO = new TodoDTO();
+			for(int i = 0; i < entities.size(); i++) {
+				todoDTO.setId(entities.get(i).getId());
+				todoDTO.setTitle(entities.get(i).getTitle());
+				todoDTO.setDone(entities.get(i).isDone());
+				dtos.add(todoDTO);
+			}
+			ResponseDTO<TodoDTO> response = ResponseDTO.<TodoDTO>builder().data(dtos).build();
+			return ResponseEntity.ok().body(response);
+
+		} catch (Exception e) {
+			String error = e.getMessage();
+			ResponseDTO<TodoDTO> response = ResponseDTO.<TodoDTO>builder().error(error).build();
+			return ResponseEntity.badRequest().body(response);
+		}
 	}
 }

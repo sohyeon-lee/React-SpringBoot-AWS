@@ -12,7 +12,7 @@ import com.example.demo.persistence.TodoRepository;
 import lombok.extern.slf4j.Slf4j;
 
 /**
- * @author isohy
+ * @author isohyeon
  *
  */
 @Slf4j
@@ -43,20 +43,6 @@ public class TodoService {
 		repository.save(entity);
 		log.info("Entity Id : {} is saved.", entity.getId());
 		return repository.findByUserId(entity.getUserId());
-	}
-	
-	// 데이터 검증 메서드
-	// 넘어온 데이터가 유효한지 검사, 코드가 더 커지면 클래스로 분리 예정
-	private void validate(final TodoEntity entity) {
-		if(entity == null) {
-			log.warn("Entity cannot be null.");
-			throw new RuntimeException("Entity cannot be null.");
-		}
-
-		if(entity.getUserId() == null) {
-			log.warn("Unknown user.");
-			throw new RuntimeException("Unknown user.");
-		}
 	}
 	
 	/**
@@ -90,5 +76,41 @@ public class TodoService {
 		}
 		
 		return retrieve(entity.getUserId());
+	}
+	
+	/**
+	 * Todo 삭제
+	 * 
+	 * @param entity 삭제하려는 Todo에 대한 정보를 담은 엔티티
+	 * @return 삭제 후 Todo 리스트를 반환 
+	 */
+	public List<TodoEntity> delete(final TodoEntity entity) {
+		validate(entity);
+		
+		try {
+			repository.delete(entity);
+		} catch (Exception e) {
+			log.error("error deleting entity", entity.getId(), e);
+			throw new RuntimeException("error deleting entity" + entity.getId());
+		}
+		
+		return retrieve(entity.getUserId());
+	}
+	
+	/**
+	 * 데이터 검증 메서드
+	 * 
+	 * @param entity 검증하려는 데이터를 담은 엔티티
+	 */
+	private void validate(final TodoEntity entity) {
+		if(entity == null) {
+			log.warn("Entity cannot be null.");
+			throw new RuntimeException("Entity cannot be null.");
+		}
+
+		if(entity.getUserId() == null) {
+			log.warn("Unknown user.");
+			throw new RuntimeException("Unknown user.");
+		}
 	}
 }
