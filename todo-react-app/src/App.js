@@ -7,6 +7,19 @@ import { List, Paper } from '@mui/material';
 
 function App() {
   const [items, setItems] = useState([]);
+
+  // API를 이용해 리스트 초기화
+  const serverPath = 'http://localhost:8080';
+  const requestOptions = {
+    method: 'GET',
+    Headers: {'Content-Type': 'application/json'},
+  };
+  fetch(`${serverPath}/todo`, requestOptions)
+    .then((response) => response.json())
+    .then(
+      (response) => {setItems(response.data)},
+      (error) => {}
+    );
   
   // todo item 추가
   const addItem = (item) => {
