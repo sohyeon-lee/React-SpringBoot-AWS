@@ -2,10 +2,8 @@ import React, { useState } from 'react';
 import { Button, Input, InputGroup } from 'reactstrap';
 
 function AddTodo(props) {
-  // 사용자의 입력을 저장할 오브젝트
-  const [item, setItem] = useState({title:""});
-  // App.js에서 넘겨준 addItem 함수
-  const addItem = props.addItem;
+  const [item, setItem] = useState({title:""}); // 사용자의 입력을 저장할 오브젝트
+  const addItem = props.addItem; // App.js에서 넘겨준 addItem 함수
 
   // onButtonClick 함수
   const onButtonClick = () => {
@@ -16,7 +14,7 @@ function AddTodo(props) {
   // onInputChange 함수
   const onInputChange = (e) => {
     setItem({title : e.target.value});
-    console.log(item);
+    //console.log(item);
   };
 
   // enterKeyEventHandler 함수
