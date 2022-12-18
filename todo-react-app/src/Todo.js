@@ -1,13 +1,21 @@
 import React, { useState } from 'react';
-import { Checkbox, InputBase, ListItem, ListItemText } from '@mui/material';
+import { Checkbox, IconButton, InputBase, ListItem, ListItemSecondaryAction, ListItemText } from '@mui/material';
+import { DeleteOutlined } from '@mui/icons-material';
 
 function Todo(props) {
   const [item, setItem] = useState(props.item);
+  const deleteItem = props.deleteItem; // App에서 전달 받은 todo 삭제 함수
+
+  // deleteEventHandler 작성
+  const deleteEventHandler = () => {
+    deleteItem(item);
+  }
 
   return (
     <>
       <ListItem>
         <Checkbox checked={item.done} />
+        
         <ListItemText>
           <InputBase
             inputProps={{ 'aria-label': 'naked' }}
@@ -19,6 +27,12 @@ function Todo(props) {
             fullWidth={true}
           />
         </ListItemText>
+
+        <ListItemSecondaryAction>
+          <IconButton aria-label='Delete Todo' onClick={deleteEventHandler}>
+            <DeleteOutlined />
+          </IconButton>
+        </ListItemSecondaryAction>
       </ListItem>
 
       {/* reactstrap */}
