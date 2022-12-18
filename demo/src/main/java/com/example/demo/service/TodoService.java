@@ -12,6 +12,12 @@ import com.example.demo.persistence.TodoRepository;
 import lombok.extern.slf4j.Slf4j;
 
 /**
+ * Todo 아이템에 대한 비즈니스 로직을 수행하는 Service 클래스
+ * 
+ * controller와 persistence 사이에서 비즈니스 로직을 수행한다.
+ * HTTP와 연관된 컨트롤러에서 분리돼 있고, 데이터베이스와 연관된 퍼시스턴스와도 분리돼 있다.
+ * 서비스 레이어에서는 우리가 개발하고자 하는 로직에 집중할 수 있다.
+ * 
  * @author isohyeon
  *
  */
@@ -23,6 +29,7 @@ public class TodoService {
 	private TodoRepository repository;
 	
 	/**
+	 * 레이어드 아키텍처 연습을 위한 테스트 메서드
 	 * @return
 	 */
 	public String testService() {
@@ -34,8 +41,9 @@ public class TodoService {
 	}
 	
 	/**
-	 * @param entity
-	 * @return
+	 * Todo 아이템 추가 메서드
+	 * @param entity 추가 데이터를 담은 TodoEntity 클래스
+	 * @return TodoRepository 클래스의 findByUserId 메서드 결과 반환
 	 */
 	public List<TodoEntity> create(final TodoEntity entity) {
 		validate(entity); 
@@ -46,16 +54,18 @@ public class TodoService {
 	}
 	
 	/**
-	 * @param userId
-	 * @return
+	 * Todo 아이템 목록 조회 메서드
+	 * @param userId 조회하려는 todo 작성자 아이디
+	 * @return TodoRepository클래스의 findByUserId메서드 결과 반환
 	 */
 	public List<TodoEntity> retrieve(final String userId) {
 		return repository.findByUserId(userId);
 	}
 	
 	/**
-	 * @param entity
-	 * @return
+	 * Todo 아이템 수정 메서드
+	 * @param entity 수정 데이터 담은 TodoEntity 클래스
+	 * @return TodoService클래스의 retrieve메서드 결과 반환
 	 */
 	public List<TodoEntity> update(final TodoEntity entity) {
 		validate(entity);
@@ -79,10 +89,9 @@ public class TodoService {
 	}
 	
 	/**
-	 * Todo 삭제
-	 * 
-	 * @param entity 삭제하려는 Todo에 대한 정보를 담은 엔티티
-	 * @return 삭제 후 Todo 리스트를 반환 
+	 * Todo 아이템 삭제 메서드
+	 * @param entity 삭제하려는 데이터를 담은 TodoEntity 클래스
+	 * @return TodoService클래스의 retrieve메서드 결과 반환
 	 */
 	public List<TodoEntity> delete(final TodoEntity entity) {
 		validate(entity);
@@ -99,7 +108,7 @@ public class TodoService {
 	
 	/**
 	 * 데이터 검증 메서드
-	 * 
+	 * 코드의 크기가 커지면 클래스로 분리할 예정임
 	 * @param entity 검증하려는 데이터를 담은 엔티티
 	 */
 	private void validate(final TodoEntity entity) {

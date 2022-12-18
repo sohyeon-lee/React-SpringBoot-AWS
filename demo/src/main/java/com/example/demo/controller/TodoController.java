@@ -18,6 +18,16 @@ import com.example.demo.dto.TodoDTO;
 import com.example.demo.model.TodoEntity;
 import com.example.demo.service.TodoService;
 
+/**
+ * 요청한 Todo 아이템과 http 응답을 반환하는 Controller 클래스
+ * 
+ * 서비스 로직을 캡슐화하거나 추가적인 정보를 함께 반한하기 위해 DTO를 사용한다.
+ * 사용자에게서 TodoDTO를 요청 body로 받고, 이를 TodoEntity로 변환해 저장한다.
+ * TodoService의 메서드가 반환한 TodoEntity는 TodoDTO로 변환해서 반환한다.
+ * 
+ * @author isohyeon
+ *
+ */
 @RestController
 @RequestMapping("todo")
 public class TodoController {
@@ -27,6 +37,10 @@ public class TodoController {
 	
 	private static String temporaryUserId = "temporary-user"; // 임시 user id
 	
+	/**
+	 * 레이어드 아키텍처 연습을 위한 테스트 메서드
+	 * @return http status와 응답 데이터 반환
+	 */
 	@GetMapping("/test")
 	public ResponseEntity<?> testTodo() {
 		String str = service.testService();
@@ -36,6 +50,11 @@ public class TodoController {
 		return ResponseEntity.ok().body(response);
 	}
 	
+	/**
+	 * Todo 아이템 추가 메서드
+	 * @param dto 사용자가 추가하려는 json 형식의 데이터를 담은 TodoDTO
+	 * @return http status와 todo list를 반환
+	 */
 	@PostMapping
 	public ResponseEntity<?> createTodo(@RequestBody TodoDTO dto) {
 		try {
@@ -71,6 +90,10 @@ public class TodoController {
 		}
 	}
 	
+	/**
+	 * Todo 아이템 목록 조회 메서드
+	 * @return http status와 todo list를 반환
+	 */
 	@GetMapping
 	public ResponseEntity<?> retrieveTodoList() {
 		// 서비스 클래스의 retrieve 메서드를 사용해 Todo 리스트를 가져온다.
@@ -90,6 +113,11 @@ public class TodoController {
 		return ResponseEntity.ok().body(response);
 	}
 	
+	/**
+	 * Todo 아이템 수정 메서드
+	 * @param dto 사용자가 수정한 json 형식의 데이터를 담은 TodoDTO
+	 * @return http status와 todo list를 반환
+	 */
 	@PutMapping
 	public ResponseEntity<?> updateTodo(@RequestBody TodoDTO dto) {
 		TodoEntity entity = TodoDTO.toEntity(dto);
@@ -110,6 +138,11 @@ public class TodoController {
 		return ResponseEntity.ok().body(response);
 	}
 	
+	/**
+	 * Todo 아이템 삭제 메서드
+	 * @param dto 사용자가 삭제하려는 json 형식의 데이터를 담은 TodoDTO
+	 * @return http status와 todo list를 반환
+	 */
 	@DeleteMapping
 	public ResponseEntity<?> deleteTodo(@RequestBody TodoDTO dto) {
 		try {

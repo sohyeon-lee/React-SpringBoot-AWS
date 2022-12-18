@@ -15,6 +15,12 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.demo.dto.ResponseDTO;
 import com.example.demo.dto.TestRequestBodyDTO;
 
+/**
+ * REST API 구현 학습을 위한 클래스
+ * 
+ * @author isohyeon
+ *
+ */
 @RestController
 @RequestMapping("test")
 public class TestController {
