@@ -7,6 +7,16 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+/**
+ * TodoEntity의 DTO 클래스
+ * 
+ * 데이터 전달 목적의 DTO 클래스이다. 
+ * 비즈니스 로직 캡슐화를 위해서 서비스가 요청을 처리하고 클라이언트로 반환할 때, Model/Entity를 그대로 리턴하지 않고 DTO로 변환하여 리턴한다.
+ * 또, 클라이언트가 필요한 정보를 Model/Entity가 포함하지 않은 경우 DTO에 필드로 선언하여 사용한다.
+ * 
+ * @author isohyeon
+ *
+ */
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
