@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import Todo from './Todo'
-import AddTodo from './AddTodo';
+import Todo from './todo/Todo'
+import AddTodo from './todo/AddTodo';
 import { List, Paper } from '@mui/material';
 
 function App() {
