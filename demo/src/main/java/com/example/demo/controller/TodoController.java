@@ -2,6 +2,7 @@ package com.example.demo.controller;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -61,6 +62,7 @@ public class TodoController {
 			// TodoEntity로 변환한다.
 			TodoEntity entity = TodoDTO.toEntity(dto);
 			// id를 null로 초기화 한다. 생성 당시에는 id가 없어야 하기 때문이다.
+			//String uuid = UUID.randomUUID().toString();
 			entity.setId(null);
 			// 인증과 인가에서 수정 할 예정, 지금은 인증과 인가 기능이 없으므로 한 유저(temporary-user)만 로그인 없이 사용 가능
 			entity.setUserId(temporaryUserId);
@@ -69,15 +71,8 @@ public class TodoController {
 			List<TodoEntity> entities = service.create(entity);
 			
 			// 자바 스트림을 이용해 리턴된 엔티티 리스트를 TodoDTO리스트로 변환
-			//List<TodoDTO> dtos = entities.stream().map(TodoDTO::new).collect(Collectors.toList());
-			List<TodoDTO> dtos = new ArrayList<>();
-			TodoDTO todoDTO = new TodoDTO();
-			for(int i = 0; i < entities.size(); i++) {
-				todoDTO.setId(entities.get(i).getId());
-				todoDTO.setTitle(entities.get(i).getTitle());
-				todoDTO.setDone(entities.get(i).isDone());
-				dtos.add(todoDTO);
-			}
+			List<TodoDTO> dtos = entities.stream().map(TodoDTO::new).collect(Collectors.toList());
+
 			// 변환된 TodoDTO리스트를 이용해 ResponseDTO를 초기화한다.
 			ResponseDTO<TodoDTO> response = ResponseDTO.<TodoDTO>builder().data(dtos).build();
 			return ResponseEntity.ok().body(response);
@@ -100,15 +95,8 @@ public class TodoController {
 		List<TodoEntity> entities = service.retrieve(temporaryUserId);
 		
 		// 자바 스트림을 이용해 리턴된 엔티티 리스트를 TodoDTO리스트로 변환
-		//List<TodoDTO> dtos = entities.stream().map(TodoDTO::new).collect(Collectors.toList());
-		List<TodoDTO> dtos = new ArrayList<>();
-		TodoDTO todoDTO = new TodoDTO();
-		for(int i = 0; i < entities.size(); i++) {
-			todoDTO.setId(entities.get(i).getId());
-			todoDTO.setTitle(entities.get(i).getTitle());
-			todoDTO.setDone(entities.get(i).isDone());
-			dtos.add(todoDTO);
-		}
+		List<TodoDTO> dtos = entities.stream().map(TodoDTO::new).collect(Collectors.toList());
+
 		ResponseDTO<TodoDTO> response = ResponseDTO.<TodoDTO>builder().data(dtos).build();
 		return ResponseEntity.ok().body(response);
 	}
@@ -125,15 +113,8 @@ public class TodoController {
 		
 		List<TodoEntity> entities = service.update(entity);
 		
-		//List<TodoDTO> dtos = entities.stream().map(TodoDTO::new).collect(Collectors.toList());
-		List<TodoDTO> dtos = new ArrayList<>();
-		TodoDTO todoDTO = new TodoDTO();
-		for(int i = 0; i < entities.size(); i++) {
-			todoDTO.setId(entities.get(i).getId());
-			todoDTO.setTitle(entities.get(i).getTitle());
-			todoDTO.setDone(entities.get(i).isDone());
-			dtos.add(todoDTO);
-		}
+		List<TodoDTO> dtos = entities.stream().map(TodoDTO::new).collect(Collectors.toList());
+
 		ResponseDTO<TodoDTO> response = ResponseDTO.<TodoDTO>builder().data(dtos).build();
 		return ResponseEntity.ok().body(response);
 	}
@@ -150,15 +131,8 @@ public class TodoController {
 			entity.setUserId(temporaryUserId); // 수정 예정
 			
 			List<TodoEntity> entities = service.delete(entity);
-			//List<TodoDTO> dtos = entities.stream().map(TodoDTO::new).collect(Collectors.toList());
-			List<TodoDTO> dtos = new ArrayList<>();
-			TodoDTO todoDTO = new TodoDTO();
-			for(int i = 0; i < entities.size(); i++) {
-				todoDTO.setId(entities.get(i).getId());
-				todoDTO.setTitle(entities.get(i).getTitle());
-				todoDTO.setDone(entities.get(i).isDone());
-				dtos.add(todoDTO);
-			}
+			List<TodoDTO> dtos = entities.stream().map(TodoDTO::new).collect(Collectors.toList());
+			
 			ResponseDTO<TodoDTO> response = ResponseDTO.<TodoDTO>builder().data(dtos).build();
 			return ResponseEntity.ok().body(response);
 
