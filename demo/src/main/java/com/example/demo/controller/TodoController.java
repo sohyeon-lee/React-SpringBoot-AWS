@@ -62,7 +62,6 @@ public class TodoController {
 			// TodoEntity로 변환한다.
 			TodoEntity entity = TodoDTO.toEntity(dto);
 			// id를 null로 초기화 한다. 생성 당시에는 id가 없어야 하기 때문이다.
-			//String uuid = UUID.randomUUID().toString();
 			entity.setId(null);
 			// 인증과 인가에서 수정 할 예정, 지금은 인증과 인가 기능이 없으므로 한 유저(temporary-user)만 로그인 없이 사용 가능
 			entity.setUserId(temporaryUserId);
@@ -112,7 +111,6 @@ public class TodoController {
 		entity.setUserId(temporaryUserId); // 수정 예정
 		
 		List<TodoEntity> entities = service.update(entity);
-		
 		List<TodoDTO> dtos = entities.stream().map(TodoDTO::new).collect(Collectors.toList());
 
 		ResponseDTO<TodoDTO> response = ResponseDTO.<TodoDTO>builder().data(dtos).build();
