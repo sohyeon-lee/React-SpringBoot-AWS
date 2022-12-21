@@ -20,22 +20,22 @@ function Todo(props) {
 
   // enter키를 누르면 readOnly 모드를 종료하는 함수 (readOnly true)
   const turnOnReadOnly = (e) => {
-    if(e.key === 'Enter') {
+    if(e.key === 'Enter' && readOnly === false) {
       setReadOnly(true);
-      // 이후 updateAPI와 연결하여 서버에 바뀐 아이템 저장 예정
+      // 서버에 바뀐 아이템 저장
+      editItem(item);
     }
   }
 
   // title 변경을 위한 이벤트 핸들러 함수
   const editEventHandler = (e) => {
-    item.title = e.target.value;
-    editItem();
+    setItem({...item, title:e.target.value});
   }
 
   // checkbox 체크 변경을 위한 이벤트 핸들러 함수
   const checkboxEventHandler = (e) => {
     item.done = e.target.checked;
-    editItem();
+    editItem(item);
   }
 
   return (
