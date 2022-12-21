@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Todo from './todo/Todo'
@@ -10,16 +10,19 @@ function App() {
 
   // API를 이용해 리스트 초기화
   const serverPath = 'http://localhost:8080';
-  const requestOptions = {
-    method: 'GET',
-    Headers: {'Content-Type': 'application/json'},
-  };
-  fetch(`${serverPath}/todo`, requestOptions)
-    .then((response) => response.json())
-    .then(
-      (response) => {setItems(response.data)},
-      (error) => {}
-    );
+  // Effect 훅을 사용하여 무한 루프 방지
+  useEffect(()=>{
+    const requestOptions = {
+      method: 'GET',
+      Headers: {'Content-Type': 'application/json'},
+    };
+    fetch(`${serverPath}/todo`, requestOptions)
+      .then((response) => response.json())
+      .then(
+        (response) => {setItems(response.data)},
+        (error) => {}
+      );
+  }, []);
   
   // todo item 추가
   const addItem = (item) => {
