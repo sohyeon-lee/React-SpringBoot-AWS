@@ -4,6 +4,10 @@ import org.springframework.stereotype.Service;
 
 import com.example.demo.persistence.UserRepository;
 
+/**
+ * @author isohyeon
+ *
+ */
 @Service
 public class UserService {
 	
@@ -12,6 +16,5 @@ public class UserService {
 	public UserService(UserRepository userRepository) {
 		this.userRepository = userRepository;
 	}
-	
 	
 }
