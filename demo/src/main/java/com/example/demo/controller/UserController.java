@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.demo.dto.ResponseDTO;
 import com.example.demo.dto.UserDTO;
 import com.example.demo.model.UserEntity;
+import com.example.demo.security.TokenProvider;
 import com.example.demo.service.UserService;
 
 import lombok.extern.slf4j.Slf4j;
@@ -25,9 +26,11 @@ import lombok.extern.slf4j.Slf4j;
 public class UserController {
 	
 	private final UserService userService;
+	private final TokenProvider tokenProvider;
 
-	public UserController(UserService userService) {
+	public UserController(UserService userService, TokenProvider tokenProvider) {
 		this.userService = userService;
+		this.tokenProvider = tokenProvider;
 	}
 	
 	/**
@@ -66,6 +69,7 @@ public class UserController {
 	
 	/**
 	 * 로그인
+	 * 
 	 * @param userDTO 로그인 정보를 담은 UserDTO 클래스
 	 * @return http status와 응답 데이터(로그인한 userDTO 또는 에러 메시지)를 반환
 	 */
@@ -74,9 +78,12 @@ public class UserController {
 		UserEntity user = userService.getByCredentials(userDTO.getUsername(), userDTO.getPassword());
 		
 		if(user != null) {
+			// 토큰 생성
+			final String token = tokenProvider.create(user);
 			final UserDTO responUserDTO = UserDTO.builder()
 					.username(user.getUsername())
 					.id(user.getId())
+					.token(token)
 					.build();
 			return ResponseEntity.ok().body(responUserDTO);
 		} else {
