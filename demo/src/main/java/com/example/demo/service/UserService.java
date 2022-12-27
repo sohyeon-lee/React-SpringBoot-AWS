@@ -1,5 +1,6 @@
 package com.example.demo.service;
 
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.model.UserEntity;
@@ -45,11 +46,19 @@ public class UserService {
 	
 	/**
 	 * 로그인 인증 메서드
+	 * 
 	 * @param username 로그인 대상의 username
 	 * @param password 로그인 대상의 password
-	 * @return UserRepository 클래스의 findByUsernameAndPassword 메서드 결과 반환
+	 * @param encoder 스프링 시큐리티가 제공하는 BcryptPasswordEncoder
+	 * @return 로그인 유저 정보를 담은 UserEntity 또는 null
 	 */
-	public UserEntity getByCredentials(final String username, final String password) {
-		return userRepository.findByUsernameAndPassword(username, password);
+	public UserEntity getByCredentials(final String username, final String password, final PasswordEncoder encoder) {
+		final UserEntity originalUser = userRepository.findByUsername(username);
+		
+		// matches 메서드를 이용해 패스워드가 같은지 확인
+		if(originalUser != null && encoder.matches(password, originalUser.getPassword())) {
+			return originalUser;
+		}
+		return null;
 	}
 }

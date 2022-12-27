@@ -1,6 +1,7 @@
 package com.example.demo.controller;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -27,10 +28,12 @@ public class UserController {
 	
 	private final UserService userService;
 	private final TokenProvider tokenProvider;
+	private final PasswordEncoder passwordEncoder;
 
-	public UserController(UserService userService, TokenProvider tokenProvider) {
+	public UserController(UserService userService, TokenProvider tokenProvider, PasswordEncoder passwordEncoder) {
 		this.userService = userService;
 		this.tokenProvider = tokenProvider;
+		this.passwordEncoder = passwordEncoder;
 	}
 	
 	/**
@@ -51,7 +54,7 @@ public class UserController {
 			// 요청을 이용해 저장할 유저 만들기
 			UserEntity user = UserEntity.builder()
 					.username(userDTO.getUsername())
-					.password(userDTO.getPassword())
+					.password(passwordEncoder.encode(userDTO.getPassword()))
 					.build();
 			// 서비스를 이용해 레포지터리에 유저 저장
 			UserEntity registeredUser = userService.create(user);
@@ -75,7 +78,7 @@ public class UserController {
 	 */
 	@PostMapping("/signin")
 	public ResponseEntity<?> authenticate(@RequestBody UserDTO userDTO) {
-		UserEntity user = userService.getByCredentials(userDTO.getUsername(), userDTO.getPassword());
+		UserEntity user = userService.getByCredentials(userDTO.getUsername(), userDTO.getPassword(), passwordEncoder);
 		
 		if(user != null) {
 			// 토큰 생성
