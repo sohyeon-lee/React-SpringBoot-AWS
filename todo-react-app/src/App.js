@@ -3,8 +3,9 @@ import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Todo from './todo/Todo'
 import AddTodo from './todo/AddTodo';
-import { List, Paper } from '@mui/material';
-import { call } from './util/ApiService';
+import { AppBar, Grid, List, Paper, Toolbar, Typography } from '@mui/material';
+import { call, signout } from './util/ApiService';
+import { Button, Container } from 'reactstrap';
 
 function App() {
   const [items, setItems] = useState([]);
@@ -35,18 +36,28 @@ function App() {
   }
   
   let todoItems = items.length > 0 && items.map((item)=><Todo item={item} key={item.id} deleteItem={deleteItem} editItem={editItem}/>);
+  let navigationBar = (
+    <AppBar position='static'>
+      <Toolbar>
+        <Grid justifyContent={"space-between"} container>
+          <Grid item>
+            <Typography variant='h6'>오늘의 할일</Typography>
+          </Grid>
+          <Grid item>
+            <Button color='inherit' raised='true' onClick={signout}>로그아웃</Button>
+          </Grid>
+        </Grid>
+      </Toolbar>
+    </AppBar>
+  );
   
   return (
-    <div className="App container">
-      <AddTodo addItem={addItem}/>
-      <Paper style={{margin:16}}>
-        <List>
-          {todoItems}
-        </List>
-      </Paper>
-      {/* <ListGroup style={{marginTop: 16}}>
-        <ListGroupItem>{todoItems}</ListGroupItem>
-      </ListGroup> */}
+    <div className='App'>
+      {navigationBar}
+      <Container maxwidth='md'>
+        <AddTodo addItem={addItem}/>
+        <div className='TodoList'>{todoItems}</div>
+      </Container>
     </div>
   );
 }

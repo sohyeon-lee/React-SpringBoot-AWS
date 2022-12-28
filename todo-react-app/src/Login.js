@@ -18,7 +18,7 @@ const Login = () => {
     <Container component='main' maxWidth='xs' style={{marginTop: '8%'}}>
       <Grid container sapcing={2} style={{marginBottom: '3%'}}>
         <Grid item xs={12}>
-          <Typography component='h1' variant='h5'>
+          <Typography component='h1' variant='h5' style={{textAlign: 'center'}}>
             로그인
           </Typography>
         </Grid>
@@ -51,7 +51,7 @@ const Login = () => {
             />
           </Grid>
           <Grid item xs={12}>
-            <Button type='submit' variant='contained' color='primary'>로그인</Button>
+            <Button type='submit' variant='contained' color='primary' style={{width:'100%'}}>로그인</Button>
           </Grid>
         </Grid>
       </form>
