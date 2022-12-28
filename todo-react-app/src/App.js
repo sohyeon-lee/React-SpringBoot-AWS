@@ -8,12 +8,16 @@ import { call, signout } from './util/ApiService';
 
 function App() {
   const [items, setItems] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   // todo item 조회
   // Effect 훅을 사용하여 무한 루프 방지
   useEffect(()=>{
     call('/todo', 'GET', null)
-    .then((response) => setItems(response.data));
+    .then((response) => {
+      setItems(response.data);
+      setLoading(false);
+    });
   }, []);
   
   // todo item 추가
@@ -50,17 +54,32 @@ function App() {
     </AppBar>
   );
   
+  // 로딩중이 아닐 때 렌더링할 부분
+  let todoListPage = (
+    <div>
+      {navigationBar}
+      <Container maxwidth='md'>
+        <AddTodo addItem={addItem}/>
+        <Paper style={{margin:16}}>
+          <List>
+            {todoItems}
+          </List>
+        </Paper>
+      </Container>
+    </div>
+  );
+
+  // 로딩중일 때 렌더링 할 부분
+  let loadingPage = <Container style={{marginTop: '30%'}}><h1> Loading .. </h1></Container>
+  let content = loadingPage;
+  if(!loading) {
+    // 로딩중이 아니면 todoListPage 선택
+    content = todoListPage;
+  }
+  
   return (
   <div className="App">
-    {navigationBar}
-    <Container maxwidth='md'>
-      <AddTodo addItem={addItem}/>
-      <Paper style={{margin:16}}>
-        <List>
-          {todoItems}
-        </List>
-      </Paper>
-    </Container>
+    {content}
   </div>
   );
 }
