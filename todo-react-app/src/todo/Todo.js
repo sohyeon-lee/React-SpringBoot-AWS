@@ -70,16 +70,6 @@ function Todo(props) {
           </IconButton>
         </ListItemSecondaryAction>
       </ListItem>
-
-      {/* reactstrap */}
-      {/* <ListGroupItem>
-          <InputGroup>
-            <Input type="checkbox" checked={item.done} readOnly/>
-            <ListGroupItemText>
-              <Input plaintext id={item.id} name={item.id} value={item.title} readOnly/>
-            </ListGroupItemText>
-          </InputGroup>
-      </ListGroupItem> */}
     </>
   );
 }

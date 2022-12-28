@@ -3,9 +3,8 @@ import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Todo from './todo/Todo'
 import AddTodo from './todo/AddTodo';
-import { AppBar, Grid, List, Paper, Toolbar, Typography } from '@mui/material';
+import { AppBar, Button, Container, Grid, List, Paper, Toolbar, Typography } from '@mui/material';
 import { call, signout } from './util/ApiService';
-import { Button, Container } from 'reactstrap';
 
 function App() {
   const [items, setItems] = useState([]);
@@ -52,13 +51,17 @@ function App() {
   );
   
   return (
-    <div className='App'>
-      {navigationBar}
-      <Container maxwidth='md'>
-        <AddTodo addItem={addItem}/>
-        <div className='TodoList'>{todoItems}</div>
-      </Container>
-    </div>
+  <div className="App">
+    {navigationBar}
+    <Container maxwidth='md'>
+      <AddTodo addItem={addItem}/>
+      <Paper style={{margin:16}}>
+        <List>
+          {todoItems}
+        </List>
+      </Paper>
+    </Container>
+  </div>
   );
 }
 

@@ -1,5 +1,5 @@
+import { Button, Grid, Paper, TextField } from '@mui/material';
 import React, { useState } from 'react';
-import { Button, Input, InputGroup } from 'reactstrap';
 
 function AddTodo(props) {
   const [item, setItem] = useState({title:""}); // 사용자의 입력을 저장할 오브젝트
@@ -26,14 +26,35 @@ function AddTodo(props) {
 
   return (
     <div>
-      <InputGroup size="lg" style={{marginTop: 20}}>
-        {/* onInputChange 함수, enterKeyEventHandler 함수 연결 */}
+      {/* <InputGroup size="lg" style={{marginTop: 20}}>
         <Input placeholder='Add To here' onChange={onInputChange} onKeyPress={enterKeyEventHandler} value={item.title} />
-        {/* onButtonClick 함수 연결 */}
         <Button outline style={{width: '10%'}} onClick={onButtonClick}>
           add
         </Button>
-      </InputGroup>
+      </InputGroup> */}
+
+        <Grid container style={{marginTop: 20}}>
+          <Grid xs={11} md={11} item style={{paddingRight: 16}}>
+            <TextField
+              placeholder="Add Todo here"
+              fullWidth={true}
+              onChange={onInputChange}
+              value={item.title}
+              onKeyPress={enterKeyEventHandler}
+            />
+          </Grid>
+          <Grid xs={1} md={1} item>
+            <Button
+              style={{height:'100%'}}
+              fullWidth={true}
+              color="secondary"
+              variant="outlined"
+              onClick={onButtonClick}
+            >
+              add
+            </Button>
+          </Grid>
+        </Grid>
     </div>
   );
 }
