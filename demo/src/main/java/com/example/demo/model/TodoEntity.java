@@ -13,7 +13,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 /**
- * Todo 테이블과 매핑되는 TodoEntity 클래스
+ * Todo 테이블과 매핑되는 엔티티 클래스
  * 테이블의 컬럼과 동일하게 매핑되도록 필드를 선언해야 한다.
  * 
  * @author isohyeon
