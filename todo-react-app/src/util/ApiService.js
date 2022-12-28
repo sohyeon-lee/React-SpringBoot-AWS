@@ -71,3 +71,12 @@ export function signout() {
   localStorage.setItem("ACCESS_TOKEN", null);
   window.location.href="/login";
 }
+
+/**
+ * 계정 생성 API 서비스
+ * @param {*} userDTO username, password를 담은 객체
+ * @returns 계정 생성 백엔드 요청 메서드
+ */
+export function signup(userDTO) {
+  return call("/auth/signup", "POST", userDTO);
+}
