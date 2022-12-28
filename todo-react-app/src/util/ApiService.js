@@ -20,28 +20,17 @@ export function call(api, method, request) {
     // GET method
     options.body = JSON.stringify(request);
   }
-  return fetch(options.url, options).then((response) =>
-    response.json().then((json) => {
-      if (!response.ok) {
-        // response.ok가 true이면 정상적인 리스폰스를 받은것, 아니면 에러 리스폰스를 받은것.
-        return Promise.reject(json);
-      }
-      return json;
-    })
-  ).catch((error) => {
-    console.log("http error");
-    console.log(error);
-  });
-/*
   return fetch(options.url, options).then((response) => {
-    if(response.status === 200) {
-      // let resData = JSON.parse(response.text()); 
-      // return resData;
+    if (response.status === 200) {
       return response.json();
+    } else if(response.status === 403) {
+      window.location.href = "/login/"; // redirect
+    } else {
+      Promise.reject(response);
+      throw Error(response);
     }
   }).catch((error) => {
     console.log("http error");
     console.log(error);
   });
-*/
 }
