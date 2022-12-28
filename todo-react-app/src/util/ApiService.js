@@ -34,3 +34,18 @@ export function call(api, method, request) {
     console.log(error);
   });
 }
+
+/**
+ * 로그인 API 서비스
+ * @param {*} userDTO username, password를 담은 객체
+ * @returns 인증 토큰을 포함한 서버 응답
+ */
+export function signin(userDTO) {
+  return call("/auth/signin", "POST", userDTO)
+    .then((response) => {
+      if(response.token) {
+        // 토큰이 존재하는 경우 Todo 화면으로 redirect
+        window.location.href="/";
+      }
+    })
+}
