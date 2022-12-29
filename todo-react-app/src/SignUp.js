@@ -20,11 +20,10 @@ function SignUp(props) {
 
   return (
     <Container component='main' maxWidth='xs' style={{marginTop:'8%'}}>
-      
-      <form noValidate onSubmit={handleSubmit}>
-        <Grid container spacing={2}>
+      <form noValidate onSubmit={handleSubmit} >
+        <Grid container spacing={2} style={{marginBottom: '3%'}}>
           <Grid item xs={12}>
-            <Typography component='h1' variant='h5'>
+            <Typography component='h1' variant='h5' style={{textAlign: 'center'}}>
               계정 생성
             </Typography>
           </Grid>
@@ -43,7 +42,7 @@ function SignUp(props) {
           </Grid>
           
           <Grid item xs={12}>
-          <TextField
+            <TextField
               autoComplete='current-password'
               name='password'
               variant='outlined'

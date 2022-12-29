@@ -1,7 +1,6 @@
-import { Grid, TextField, Typography } from '@mui/material';
-import { Container } from '@mui/system';
+import { Button, Container, Grid, TextField, Typography } from '@mui/material';
 import React from 'react';
-import { Button } from 'reactstrap';
+import { Link } from 'react-router-dom';
 import { signin } from './util/ApiService';
 
 const Login = () => {
@@ -15,43 +14,52 @@ const Login = () => {
   }
 
   return (
-    <Container component='main' maxWidth='xs' style={{marginTop: '8%'}}>
-      <Grid container sapcing={2} style={{marginBottom: '3%'}}>
-        <Grid item xs={12}>
-          <Typography component='h1' variant='h5' style={{textAlign: 'center'}}>
-            로그인
-          </Typography>
-        </Grid>
-      </Grid>
+    <Container component='main' maxWidth='xs' style={{marginTop:'8%'}}>
       <form noValidate onSubmit={handleSubmit}>
-        {" "}
-        {/* submit 버튼을 누르면 handleSubmit이 실행됨 */}
-        <Grid container spacing={2}>
+        <Grid container spacing={2} style={{marginBottom: '3%'}}>
           <Grid item xs={12}>
-            <TextField 
+            <Typography component='h1' variant='h5' style={{textAlign: 'center'}}>
+             로그인
+            </Typography>
+          </Grid>
+
+          {/* submit 버튼을 누르면 handleSubmit이 실행됨 */}
+          <Grid item xs={12}>
+            <TextField
+              autoComplete='fname'
+              name='username'
               variant='outlined'
               required
               fullWidth
               id='username'
               label='아이디'
-              name='username'
-              autoComplete='username'
-            />
+              autoFocus
+              />
           </Grid>
+
           <Grid item xs={12}>
-            <TextField 
-              type='password'
+            <TextField
+              autoComplete='current-password'
+              name='password'
               variant='outlined'
               required
               fullWidth
               id='password'
               label='패스워드'
-              name='password'
-              autoComplete='current-password'
-            />
+              type='password'
+              />
           </Grid>
+
           <Grid item xs={12}>
-            <Button type='submit' variant='contained' color='primary' style={{width:'100%'}}>로그인</Button>
+            <Button type='submit' variant='contained' color='primary' fullWidth>로그인</Button>
+          </Grid>
+        </Grid>
+
+        <Grid container justify='flex-end'>
+          <Grid item>
+            <Link to="/signup" variant='body2'>
+              계정이 없습니까? 계정을 생성하세요.
+            </Link>
           </Grid>
         </Grid>
       </form>
