@@ -29,7 +29,9 @@ export function call(api, method, request) {
     // GET method
     options.body = JSON.stringify(request);
   }
-  return fetch(options.url, options).then((response) => {
+  return fetch(options.url, options)
+  .then(response => response.text())
+  .then(response=>{
     if (response.status === 200) {
       return response.json();
     } else if(response.status === 403) {
@@ -38,8 +40,8 @@ export function call(api, method, request) {
       throw Error(response);
     }
   }).catch((error) => {
-    console.log("http error");
-    console.log(error);
+    let errmsg = JSON.parse(error.message);
+    alert(errmsg.error);
   });
 }
 
