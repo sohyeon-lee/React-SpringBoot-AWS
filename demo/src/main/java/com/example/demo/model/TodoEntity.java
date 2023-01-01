@@ -24,7 +24,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Data
 @Entity
-@Table(name="Todo")
+@Table(name="todo")
 public class TodoEntity {
 	@Id 
 	@GeneratedValue(generator = "system-uuid")
