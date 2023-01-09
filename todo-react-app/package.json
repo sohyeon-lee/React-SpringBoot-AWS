@@ -2,7 +2,7 @@
   "name": "todo-react-app",
   "version": "0.1.0",
   "private": true,
-  "engines": {"node": "18.12.1"},
+  "engines": {"node": "16.14.2"},
   "dependencies": {
     "@emotion/react": "^11.10.5",
     "@emotion/styled": "^11.10.5",
