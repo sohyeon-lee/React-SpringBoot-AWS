@@ -1,4 +1,4 @@
-import { API_BASE_URL  } from "../config/app-config";
+import { API_BASE_URL  } from "../config/api-config";
 
 /**
  * 백엔드 요청 유틸 함수
