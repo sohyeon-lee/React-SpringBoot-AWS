@@ -15,6 +15,7 @@ import java.io.IOException;
  * 소셜 로그인 인증이 완료된 다음 토큰 생성 및 반환
  * <p>
  * OAuth 2.0 로직이 완료된 후 호출된다.
+ * TokenProvider를 통해 토큰을 생성하고 HttpServletResponse에 토큰을 담는다.
  */
 @Slf4j
 @Component
