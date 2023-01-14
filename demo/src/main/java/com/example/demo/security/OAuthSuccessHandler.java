@@ -21,7 +21,7 @@ import java.io.IOException;
 @AllArgsConstructor
 public class OAuthSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
     @Override
-    public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
+    public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException {
         TokenProvider tokenProvider = new TokenProvider();
         String token = tokenProvider.create(authentication);
         response.getWriter().write(token);
