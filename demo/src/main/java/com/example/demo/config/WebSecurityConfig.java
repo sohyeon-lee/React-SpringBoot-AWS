@@ -1,5 +1,7 @@
 package com.example.demo.config;
 
+import com.example.demo.security.OAuthSuccessHandler;
+import com.example.demo.security.OAuthUserServiceImpl;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -23,12 +25,16 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class WebSecurityConfig {
 	
-	private JwtAuthenticationFilter jwtAuthenticationFilter;
+	private final JwtAuthenticationFilter jwtAuthenticationFilter;
+	private final OAuthUserServiceImpl oAuthUserService;
+	private final OAuthSuccessHandler oAuthSuccessHandler;
 
-	public WebSecurityConfig(JwtAuthenticationFilter jwtAuthenticationFilter) {
+	public WebSecurityConfig(JwtAuthenticationFilter jwtAuthenticationFilter, OAuthUserServiceImpl oAuthUserService, OAuthSuccessHandler oAuthSuccessHandler) {
 		this.jwtAuthenticationFilter = jwtAuthenticationFilter;
+		this.oAuthUserService = oAuthUserService;
+		this.oAuthSuccessHandler = oAuthSuccessHandler;
 	}
-	
+
 	/**
 	 * 시큐리티 관련 설정
 	 * 
@@ -58,7 +64,12 @@ public class WebSecurityConfig {
 				.and()
 				.oauth2Login()
 				.redirectionEndpoint()
-				.baseUri("/oauth2/callback/*");
+				.baseUri("/oauth2/callback/*")
+				.and()
+				.userInfoEndpoint()
+				.userService(oAuthUserService)
+				.and()
+				.successHandler(oAuthSuccessHandler);
 		
 		// filter 등록
 		// 매 요청마다 CorsFilter 실행한 후에 jwtAuthenticationFilter 실행
