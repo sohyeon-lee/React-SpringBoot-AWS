@@ -5,18 +5,23 @@ import com.example.demo.persistence.UserRepository;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.catalina.User;
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
 import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
 import org.springframework.security.oauth2.core.OAuth2AuthenticationException;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
 
+
+/**
+ * OAuth 사용자 계정 확인 및 생성
+ * <p>
+ * OAuth provider가 사용자 정보를 반환하면 사용자의 계정이 존재하는지 확인하고, 존재하지 않는 경우 계정을 생성한다.
+ */
 @Slf4j
 @Service
 public class OAuthUserServiceImpl extends DefaultOAuth2UserService {
 
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
 
     public OAuthUserServiceImpl(UserRepository userRepository) {
         this.userRepository = userRepository;
@@ -40,6 +45,13 @@ public class OAuthUserServiceImpl extends DefaultOAuth2UserService {
         if(!userRepository.existsByUsername(username)) {
             userEntity = UserEntity.builder()
                     .username(username)
+                    .authProvider(authProvider)
+                    .build();
+            userEntity = userRepository.save(userEntity);
         }
+        log.info("Successfully pulled user info username {} authProvider {}",
+                username,
+                authProvider);
+        return oAuth2User;
     }
 }
