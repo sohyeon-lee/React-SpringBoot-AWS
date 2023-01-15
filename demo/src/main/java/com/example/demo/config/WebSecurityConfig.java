@@ -2,11 +2,13 @@ package com.example.demo.config;
 
 import com.example.demo.security.OAuthSuccessHandler;
 import com.example.demo.security.OAuthUserServiceImpl;
+import com.example.demo.security.RedirectUrlCookieFilter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.oauth2.client.web.OAuth2AuthorizationRequestRedirectFilter;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.Http403ForbiddenEntryPoint;
 import org.springframework.web.filter.CorsFilter;
@@ -29,11 +31,13 @@ public class WebSecurityConfig {
 	private final JwtAuthenticationFilter jwtAuthenticationFilter;
 	private final OAuthUserServiceImpl oAuthUserService;
 	private final OAuthSuccessHandler oAuthSuccessHandler;
+	private final RedirectUrlCookieFilter redirectUrlCookieFilter;
 
-	public WebSecurityConfig(JwtAuthenticationFilter jwtAuthenticationFilter, OAuthUserServiceImpl oAuthUserService, OAuthSuccessHandler oAuthSuccessHandler) {
+	public WebSecurityConfig(JwtAuthenticationFilter jwtAuthenticationFilter, OAuthUserServiceImpl oAuthUserService, OAuthSuccessHandler oAuthSuccessHandler, RedirectUrlCookieFilter redirectUrlCookieFilter) {
 		this.jwtAuthenticationFilter = jwtAuthenticationFilter;
 		this.oAuthUserService = oAuthUserService;
 		this.oAuthSuccessHandler = oAuthSuccessHandler;
+		this.redirectUrlCookieFilter = redirectUrlCookieFilter;
 	}
 
 	/**
@@ -79,8 +83,8 @@ public class WebSecurityConfig {
 				.authenticationEntryPoint(new Http403ForbiddenEntryPoint()); // 인증되지 않은 사용자 처리
 		
 		// filter 등록
-		// 매 요청마다 CorsFilter 실행한 후에 jwtAuthenticationFilter 실행
-		http.addFilterAfter(jwtAuthenticationFilter, CorsFilter.class);
+		http.addFilterAfter(jwtAuthenticationFilter, CorsFilter.class); // 매 요청마다 CorsFilter 실행한 후에 jwtAuthenticationFilter 실행
+		http.addFilterBefore(redirectUrlCookieFilter, OAuth2AuthorizationRequestRedirectFilter.class); // 리디렉트되기 전에 필터 실행
 		
 		return http.build();
 	}
