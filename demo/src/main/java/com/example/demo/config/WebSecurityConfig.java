@@ -8,6 +8,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.Http403ForbiddenEntryPoint;
 import org.springframework.web.filter.CorsFilter;
 
 import com.example.demo.security.JwtAuthenticationFilter;
@@ -69,7 +70,10 @@ public class WebSecurityConfig {
 				.userInfoEndpoint()
 				.userService(oAuthUserService)
 				.and()
-				.successHandler(oAuthSuccessHandler);
+				.successHandler(oAuthSuccessHandler) // 인증 후 처리
+				.and()
+				.exceptionHandling()
+				.authenticationEntryPoint(new Http403ForbiddenEntryPoint()); // 인증되지 않은 사용자 처리
 		
 		// filter 등록
 		// 매 요청마다 CorsFilter 실행한 후에 jwtAuthenticationFilter 실행
