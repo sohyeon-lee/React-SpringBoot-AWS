@@ -30,11 +30,12 @@ dependencies {
 	implementation group: 'com.google.guava', name: 'guava', version: '31.1-jre'
 	implementation group: 'org.springframework.boot', name: 'spring-boot-devtools', version: '2.7.6'
 	
-	// https://mvnrepository.com/artifact/io.jsonwebtoken/jjwt
+	// jwt
 	implementation group: 'io.jsonwebtoken', name: 'jjwt', version: '0.9.1'
-	// https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-security
+	// spring-security
 	implementation 'org.springframework.boot:spring-boot-starter-security'
-
+	// oauth2-client
+	implementation group: 'org.springframework.security', name: 'spring-security-oauth2-client', version: '5.7.5'
 }
 
 //tasks.named('test') {

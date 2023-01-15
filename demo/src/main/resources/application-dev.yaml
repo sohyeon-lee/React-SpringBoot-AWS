@@ -1,0 +1,32 @@
+spring:
+  datasource:
+    driverClassName: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://sohyeon-rds.cbyvhwqoo8xy.ap-northeast-2.rds.amazonaws.com:3306/todoapp
+    username: admin
+    password: qlalfqjsgh486
+  jpa:
+    hibernate:
+      ddl-auto: none
+      naming:
+        implicit-strategy: org.hibernate.boot.model.naming.ImplicitNamingStrategyLegacyJpaImpl
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+  security:
+    oauth2:
+      client:
+        registration:
+          github:
+            clientId: 2350c43b5c56622372b3
+            clientSecret: 2f8f22669bfcdefa3aea64c4e5c04d544e15bf02
+            redirectUri: "{baseUrl}/oauth2/callback/{registrationId}" # 로그인 후 redirect 되는 주소
+            scope:
+              - user:email
+              - read:user
+        provider: # 리소스 제공자
+          github:
+            authorization-uri: https://github.com/login/oauth/authorize # 소셜 로그인 요청시 redirect 되는 주소
+            token-uri: https://github.com/login/oauth/access_token # 액세스 토큰 발급받는 주소
+            user-info-uri: https://api.github.com/user # 유저 정보를 제공받는 주소

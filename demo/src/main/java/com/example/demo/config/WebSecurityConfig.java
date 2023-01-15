@@ -1,5 +1,7 @@
 package com.example.demo.config;
 
+import com.example.demo.security.OAuthSuccessHandler;
+import com.example.demo.security.OAuthUserServiceImpl;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -23,12 +25,16 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class WebSecurityConfig {
 	
-	private JwtAuthenticationFilter jwtAuthenticationFilter;
+	private final JwtAuthenticationFilter jwtAuthenticationFilter;
+	private final OAuthUserServiceImpl oAuthUserService;
+	private final OAuthSuccessHandler oAuthSuccessHandler;
 
-	public WebSecurityConfig(JwtAuthenticationFilter jwtAuthenticationFilter) {
+	public WebSecurityConfig(JwtAuthenticationFilter jwtAuthenticationFilter, OAuthUserServiceImpl oAuthUserService, OAuthSuccessHandler oAuthSuccessHandler) {
 		this.jwtAuthenticationFilter = jwtAuthenticationFilter;
+		this.oAuthUserService = oAuthUserService;
+		this.oAuthSuccessHandler = oAuthSuccessHandler;
 	}
-	
+
 	/**
 	 * 시큐리티 관련 설정
 	 * 
@@ -43,15 +49,27 @@ public class WebSecurityConfig {
 	@Bean
 	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 		// http 시큐리티 빌더
-		http
-			.cors() // WebMvcConfig에서 이미 설정했으므로 기본 cors 설정.
-			.and()
-			.csrf().disable() // csrf는 현재 사용하지 않으므로 disable
-			.httpBasic().disable() // token을 사용하므로 basic 인증 disable
-			.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS) // session 기반이 아님
-			.and()
-			.authorizeRequests().antMatchers("/", "/auth/**").permitAll() // /와 /auth/** 경로는 인증 안해도 됨
-			.anyRequest().authenticated(); // 이외의 모든 경로는 인증해야 함
+		http.cors() // WebMvcConfig에서 이미 설정했으므로 기본 cors 설정.
+				.and()
+				.csrf()
+				.disable() // csrf는 현재 사용하지 않으므로 disable
+				.httpBasic()
+				.disable() // token을 사용하므로 basic 인증 disable
+				.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS) // session 기반이 아님
+				.and()
+				.authorizeRequests()
+				.antMatchers("/", "/auth/**", "/oauth2/**").permitAll() // /와 /auth/** 경로는 인증 안해도 됨
+				.anyRequest()
+				.authenticated() // 이외의 모든 경로는 인증해야 함
+				.and()
+				.oauth2Login()
+				.redirectionEndpoint()
+				.baseUri("/oauth2/callback/*")
+				.and()
+				.userInfoEndpoint()
+				.userService(oAuthUserService)
+				.and()
+				.successHandler(oAuthSuccessHandler);
 		
 		// filter 등록
 		// 매 요청마다 CorsFilter 실행한 후에 jwtAuthenticationFilter 실행
