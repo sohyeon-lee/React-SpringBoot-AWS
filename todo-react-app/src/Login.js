@@ -1,7 +1,7 @@
 import { Button, Container, Grid, TextField, Typography } from '@mui/material';
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { signin } from './util/ApiService';
+import { signin, socialLogin } from './util/ApiService';
 
 const Login = () => {
   const handleSubmit = (e) => {
@@ -11,6 +11,10 @@ const Login = () => {
     const password = data.get('password');
     // ApiService의 signin 메서드를 사용해 로그인
     signin({username:username, password:password});
+  }
+
+  const handleSocialLogin = (provider) => {
+    socialLogin(provider);
   }
 
   return (
@@ -52,6 +56,9 @@ const Login = () => {
 
           <Grid item xs={12}>
             <Button type='submit' variant='contained' color='primary' fullWidth>로그인</Button>
+          </Grid>
+          <Grid item xs={12}>
+            <Button onClick={() => handleSocialLogin("github")} variant='contained' style={{backgroundColor: '#000'}} fullWidth>깃허브로 로그인하기</Button>
           </Grid>
         </Grid>
 
