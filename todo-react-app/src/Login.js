@@ -1,7 +1,7 @@
 import { Button, Container, Grid, TextField, Typography } from '@mui/material';
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { signin } from './util/ApiService';
+import { signin, socialLogin } from './util/ApiService';
 
 const Login = () => {
   const handleSubmit = (e) => {
@@ -14,7 +14,7 @@ const Login = () => {
   }
 
   const handleSocialLogin = (provider) => {
-    console.log(provider);
+    socialLogin(provider);
   }
 
   return (

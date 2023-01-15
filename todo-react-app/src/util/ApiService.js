@@ -4,9 +4,9 @@ import { API_BASE_URL  } from "../config/api-config";
  * 백엔드 요청 유틸 함수
  * 로그인 시 받은 토큰을 로컬 스토리지에 저장하고, API를 호출할 때마다 로컬 스토리지에서 액세스 토큰을 불러와 헤더에 추가한다.
  * 
- * @param {*} api 요청 uri
- * @param {*} method 요청 method
- * @param {*} request 요청 데이터
+ * @param {String} api 요청 uri
+ * @param {String} method 요청 method
+ * @param {Object} request 요청 데이터
  * @returns json 형식의 api 응답 데이터
  */
 export function call(api, method, request) {
@@ -51,10 +51,10 @@ export function call(api, method, request) {
 }
 
 /**
- * 로그인 API 서비스
+ * 로그인 API
  * 인증 성공시 로컬 스토리지에 토큰을 저장하고 Todo 리스트 화면으로 redirect 한다.
  * 
- * @param {*} userDTO username, password를 담은 객체
+ * @param {Object} userDTO username, password를 담은 객체
  * @returns 인증 토큰을 포함한 서버 응답
  */
 export function signin(userDTO) {
@@ -71,7 +71,7 @@ export function signin(userDTO) {
 }
 
 /**
- * 로그아웃 서비스
+ * 로그아웃 API
  * 로컬 스토리지에 존재하는 액세스 토큰을 제거하고 로그인 페이지로 redirect한다.
  */
 export function signout() {
@@ -80,10 +80,19 @@ export function signout() {
 }
 
 /**
- * 계정 생성 API 서비스
- * @param {*} userDTO username, password를 담은 객체
+ * 계정 생성 API
+ * @param {Object} userDTO username, password를 담은 객체
  * @returns 계정 생성 백엔드 요청 메서드
  */
 export function signup(userDTO) {
   return call("/auth/signup", "POST", userDTO);
+}
+
+/**
+ * 소셜 로그인 API
+ * 백엔드의 /auth/authorize/{provider}로 브라우저를 redirect한다.
+ * @param {String} provider 
+ */
+export function socialLogin(provider) {
+  window.location.href = API_BASE_URL + "/auth/authorize/" + provider;
 }
