@@ -67,6 +67,9 @@ public class WebSecurityConfig {
 				.redirectionEndpoint()
 				.baseUri("/oauth2/callback/*")
 				.and()
+				.authorizationEndpoint()
+				.baseUri("/auth/authorize") // OAuth 2.0 흐름 시작을 위한 엔드포인트 추가
+				.and()
 				.userInfoEndpoint()
 				.userService(oAuthUserService)
 				.and()
