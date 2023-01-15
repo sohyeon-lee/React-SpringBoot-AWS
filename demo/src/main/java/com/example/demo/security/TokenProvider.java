@@ -60,11 +60,10 @@ public class TokenProvider {
 
 		return Jwts.builder()
 				.signWith(SignatureAlgorithm.HS512, SECRET_KEY)
-				// payload에 들어갈 내용
 				.setSubject(userPrincipal.getName()) // id가 리턴됨
-				.setIssuer("demo app") // iss
-				.setIssuedAt(new Date()) // iat
-				.setExpiration(expiryDate) // exp
+				.setIssuer("demo app")
+				.setIssuedAt(new Date())
+				.setExpiration(expiryDate)
 				.compact();
 	}
 
