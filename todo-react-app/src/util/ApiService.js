@@ -91,6 +91,7 @@ export function signup(userDTO) {
 /**
  * 소셜 로그인 API
  * 백엔드의 /auth/authorize/{provider}로 브라우저를 redirect한다.
+ * 백엔드가 토큰 생성 후 redirect 해야하는 url을 쿼리 파라미터로 전달한다.
  * @param {String} provider 
  */
 export function socialLogin(provider) {
