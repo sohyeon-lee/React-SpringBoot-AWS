@@ -13,6 +13,10 @@ const Login = () => {
     signin({username:username, password:password});
   }
 
+  const handleSocialLogin = (provider) => {
+    console.log(provider);
+  }
+
   return (
     <Container component='main' maxWidth='xs' style={{marginTop:'8%'}}>
       <form noValidate onSubmit={handleSubmit}>
@@ -52,6 +56,9 @@ const Login = () => {
 
           <Grid item xs={12}>
             <Button type='submit' variant='contained' color='primary' fullWidth>로그인</Button>
+          </Grid>
+          <Grid item xs={12}>
+            <Button onClick={() => handleSocialLogin("github")} variant='contained' style={{backgroundColor: '#000'}} fullWidth>깃허브로 로그인하기</Button>
           </Grid>
         </Grid>
 
