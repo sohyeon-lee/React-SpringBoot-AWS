@@ -13,7 +13,7 @@ import java.io.IOException;
 
 /**
  * 토큰 생성 후 redirect 해야하는 url을 쿠키에 저장한다.
- *
+ * <p>
  * 이 필터는 OAuth 2.0 로직으로 redirection 되기 전에 실행된다.
  * /auth/authorize 경로의 요청인 경우 redirect_url 매개변수의 값을 가져와 response의 쿠키에 추가한다.
  */
@@ -21,10 +21,10 @@ import java.io.IOException;
 @Component
 public class RedirectUrlCookieFilter extends OncePerRequestFilter {
     /**
-     * The constant REDIRECT_URI_PARAM.
+     * OAuth 2.0 인증 완료 후 reirect되는 url의 파라미터 명
      */
     public static final String REDIRECT_URI_PARAM = "redirect_url";
-    private static final int MAX_AGE = 180;
+    private static final int MAX_AGE = 180; // 쿠키 만료 기간
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {

@@ -14,6 +14,7 @@ const SocialLogin = (props) => {
 
   if (token) {
     // 쿠키 토큰 저장
+    // setCookie("ACCESS_TOKEN", token, {httpOnly: true}); // httpOnly 설정은 도메인에만 적용할 수 있다.
     setCookie('ACCESS_TOKEN', token);
     
     return (

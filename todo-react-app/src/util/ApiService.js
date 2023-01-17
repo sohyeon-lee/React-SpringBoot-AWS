@@ -63,6 +63,7 @@ export function signin(userDTO) {
       if(response) {
         console.log(response.token);
         // 쿠키에 토큰 저장
+        // setCookie("ACCESS_TOKEN", response.token, {httpOnly: true}); // httpOnly 설정은 도메인에만 적용할 수 있다.
         setCookie("ACCESS_TOKEN", response.token);
         // 토큰이 존재하는 경우 Todo 화면으로 redirect
         window.location.href="/";
