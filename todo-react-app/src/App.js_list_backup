@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import './App.css';
 import Todo from './todo/Todo'
 import AddTodo from './todo/AddTodo';
-import { AppBar, Button, Container, Grid, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Toolbar, Typography } from '@mui/material';
+import { AppBar, Button, Container, Grid, List, Paper, Toolbar, Typography } from '@mui/material';
 import { call, signout } from './util/ApiService';
 
 function App() {
@@ -60,20 +60,9 @@ function App() {
       <Container maxwidth='md'>
         <AddTodo addItem={addItem}/>
         <Paper style={{margin:16}}>
-          <TableContainer component={Paper}>
-            <Table aria-label="simple table">
-              <TableHead>
-                <TableRow>
-                  <TableCell>Status</TableCell>
-                  <TableCell>Title</TableCell>
-                  <TableCell align="right">Delete</TableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {todoItems}
-              </TableBody>
-            </Table>
-          </TableContainer>
+          <List>
+            {todoItems}
+          </List>
         </Paper>
       </Container>
     </div>

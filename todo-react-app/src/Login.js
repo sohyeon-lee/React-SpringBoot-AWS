@@ -3,7 +3,8 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { signin, socialLogin } from './util/ApiService';
 
-const Login = () => {
+const Login = (props) => {
+
   const handleSubmit = (e) => {
     e.preventDefault();
     const data = new FormData(e.target);
@@ -23,7 +24,7 @@ const Login = () => {
         <Grid container spacing={2} style={{marginBottom: '3%'}}>
           <Grid item xs={12}>
             <Typography component='h1' variant='h5' style={{textAlign: 'center'}}>
-             로그인
+              로그인
             </Typography>
           </Grid>
 
@@ -72,6 +73,5 @@ const Login = () => {
       </form>
     </Container>
   );
-};
-
+}
 export default Login;

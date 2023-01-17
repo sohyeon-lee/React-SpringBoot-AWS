@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Checkbox, IconButton, InputBase, TableCell, TableRow } from '@mui/material';
+import { Checkbox, IconButton, InputBase, ListItem, ListItemSecondaryAction, ListItemText } from '@mui/material';
 import { DeleteOutlined } from '@mui/icons-material';
 
 function Todo(props) {
@@ -40,16 +40,12 @@ function Todo(props) {
 
   return (
     <>
-      <TableRow
-        key={1}
-        sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-      >
-        <TableCell component="th" scope="row">
-          <Checkbox checked={item.done} 
-            onChange={checkboxEventHandler} // checkbox 체크 변경 이벤트 핸들러 함수 연결
-          /> 
-        </TableCell>
-        <TableCell align="right">
+      <ListItem>
+        <Checkbox checked={item.done} 
+          onChange={checkboxEventHandler} // checkbox 체크 변경 이벤트 핸들러 함수 연결
+        /> 
+        
+        <ListItemText>
           <InputBase
             inputProps={{ 
               'aria-label': 'naked',
@@ -65,13 +61,15 @@ function Todo(props) {
             multiline={true}
             fullWidth={true}
           />
-        </TableCell>
-        <TableCell align="right">
+        </ListItemText>
+
+        <ListItemSecondaryAction>
+          {/* deleteEventHandler 함수 연결 */}
           <IconButton aria-label='Delete Todo' onClick={deleteEventHandler}>
             <DeleteOutlined />
           </IconButton>
-        </TableCell>
-      </TableRow>
+        </ListItemSecondaryAction>
+      </ListItem>
     </>
   );
 }

@@ -25,36 +25,29 @@ function AddTodo(props) {
   }
 
   return (
-    <div>
-      {/* <InputGroup size="lg" style={{marginTop: 20}}>
-        <Input placeholder='Add To here' onChange={onInputChange} onKeyPress={enterKeyEventHandler} value={item.title} />
-        <Button outline style={{width: '10%'}} onClick={onButtonClick}>
-          add
-        </Button>
-      </InputGroup> */}
-
-        <Grid container style={{marginTop: 20}}>
-          <Grid xs={11} md={11} item style={{paddingRight: 16}}>
-            <TextField
-              placeholder="Add Todo here"
-              fullWidth={true}
-              onChange={onInputChange}
-              value={item.title}
-              onKeyPress={enterKeyEventHandler}
-            />
-          </Grid>
-          <Grid xs={1} md={1} item>
-            <Button
-              style={{height:'100%'}}
-              fullWidth={true}
-              color="secondary"
-              variant="outlined"
-              onClick={onButtonClick}
-            >
-              add
-            </Button>
-          </Grid>
+    <div style={{margin: 16}}>
+      <Grid container>
+        <Grid md={11} item style={{paddingRight: 16}}>
+          <TextField
+            placeholder="Add Todo here"
+            fullWidth={true}
+            onChange={onInputChange}
+            value={item.title}
+            onKeyPress={enterKeyEventHandler}
+          />
         </Grid>
+        <Grid md={1} item>
+          <Button
+            style={{height:'100%'}}
+            fullWidth={true}
+            color="secondary"
+            variant="outlined"
+            onClick={onButtonClick}
+          >
+            add
+          </Button>
+        </Grid>
+      </Grid>
     </div>
   );
 }

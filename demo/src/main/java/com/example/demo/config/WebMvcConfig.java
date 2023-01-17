@@ -17,7 +17,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
 	@Override
 	public void addCorsMappings(CorsRegistry registry) {
 		registry.addMapping("/**") // 모든 경로에 대해
-			.allowedOrigins("http://localhost:3000") // Origin이 http://localhost:3000인 경우
+			.allowedOrigins("http://localhost:3000", "http://192.168.0.4:3000") // Origin이 http://localhost:3000인 경우
 			.allowedMethods("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS") // GET, POST, PUT, PATCH, DELETE, OPTIONS 메서드 요청을 허용한다.
 			.allowedHeaders("*") // 모든 헤더와
 			.allowCredentials(true) // 인증에 관한 정보도 허용 한다.

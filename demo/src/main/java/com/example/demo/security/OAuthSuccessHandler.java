@@ -6,7 +6,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
 import org.springframework.stereotype.Component;
 
-import javax.servlet.ServletException;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -29,6 +28,7 @@ import static com.example.demo.security.RedirectUrlCookieFilter.REDIRECT_URI_PAR
 public class OAuthSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
 
     private static final String LOCAL_REDIRECT_URL = "http://localhost:3000";
+//    private static final String LOCAL_REDIRECT_URL = "http://192.168.0.211:3000";
 
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException {
