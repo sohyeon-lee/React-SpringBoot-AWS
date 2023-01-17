@@ -98,4 +98,15 @@ export function signup(userDTO) {
 export function socialLogin(provider) {
   const frontendUrl = window.location.protocol + "//" + window.location.host;
   window.location.href = API_BASE_URL + "/auth/authorize/" + provider + "?redirect_url=" + frontendUrl;
+  
+  // token query param 말고 헤더로 받기 시도 중 ...
+  // return call("/auth/authorize/" + provider + "?redirect_url=" + frontendUrl, 'GET')
+  //   .then((response) => {
+  //     if(response) {
+  //       console.log(response.headers.get('token'));
+  //       //TODO - 토큰 쿠키에 저장
+  //       window.location.href='/sociallogin';
+  //     }
+  //   }
+  // )
 }
