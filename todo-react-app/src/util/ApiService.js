@@ -1,4 +1,5 @@
 import { API_BASE_URL  } from "../config/api-config";
+import { getCookie, removeCookie, setCookie } from "./Cookie";
 
 /**
  * 백엔드 요청 유틸 함수
@@ -13,9 +14,9 @@ export function call(api, method, request) {
   let headers = new Headers({
     "Content-Type":"application/json",
   });
-
-  // 로컬 스토리지에서 access token 가져오기 
-  const accessToken  = localStorage.getItem("ACCESS_TOKEN");
+  
+  // 쿠키에서 access token 가져오기
+  const accessToken = getCookie('ACCESS_TOKEN');
   if(accessToken && accessToken !== null) {
     headers.append("Authorization", "Bearer" + accessToken);
   }
@@ -61,8 +62,8 @@ export function signin(userDTO) {
     .then((response) => {
       if(response) {
         console.log(response.token);
-        // 로컬 스토리지에 토큰 저장
-        localStorage.setItem("ACCESS_TOKEN", response.token);
+        // 쿠키에 토큰 저장
+        setCookie("ACCESS_TOKEN", response.token);
         // 토큰이 존재하는 경우 Todo 화면으로 redirect
         window.location.href="/";
       }
@@ -74,7 +75,7 @@ export function signin(userDTO) {
  * 로컬 스토리지에 존재하는 액세스 토큰을 제거하고 로그인 페이지로 redirect한다.
  */
 export function signout() {
-  localStorage.setItem("ACCESS_TOKEN", null);
+  removeCookie('ACCESS_TOKEN');
   window.location.href="/login";
 }
 

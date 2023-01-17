@@ -16,6 +16,7 @@
     "react-router-dom": "^6.6.1",
     "react-scripts": "5.0.1",
     "reactstrap": "^9.1.5",
+    "universal-cookie": "^4.0.4",
     "web-vitals": "^2.1.4"
   },
   "scripts": {
